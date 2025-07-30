@@ -1,6 +1,7 @@
 # Joc-2D-pe-FPGA-cu-Controler-VGA-1080p-in-Verilog
 
 Joc 2D pe FPGA cu Controler VGA 1080p în Verilog
+
 📝 Descriere Generală
 Acest proiect este o implementare în Verilog a unui joc 2D simplu, conceput să ruleze pe o placă de dezvoltare FPGA (Digilent Basys 3). Proiectul generează un semnal video VGA cu o rezoluție de 1920x1080 (1080p).
 

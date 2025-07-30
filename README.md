@@ -115,3 +115,5 @@ vgaGreen[3:0]: Pini D17, G17, H17, J17
 
 
 vgaBlue[3:0]: Pini J18, K18, L18, N18 
+![img1](https://github.com/user-attachments/assets/233a3ab8-4a86-49b9-a720-41fffcbcf739)  
+![img2](https://github.com/user-attachments/assets/aad6efb3-906a-4e43-96c3-2119b61978b0)

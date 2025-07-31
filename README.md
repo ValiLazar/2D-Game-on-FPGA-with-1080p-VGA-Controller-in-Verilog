@@ -1,120 +1,92 @@
-# Joc-2D-pe-FPGA-cu-Controler-VGA-1080p-in-Verilog
+2D Game on FPGA with 1080p VGA Controller in Verilog
 
-Joc 2D pe FPGA cu Controler VGA 1080p în Verilog
+📝 General Description
 
-📝 Descriere Generală
-Acest proiect este o implementare în Verilog a unui joc 2D simplu, conceput să ruleze pe o placă de dezvoltare FPGA (Digilent Basys 3). Proiectul generează un semnal video VGA cu o rezoluție de 1920x1080 (1080p).
+This project is a Verilog implementation of a simple 2D game designed to run on an FPGA development board (specifically, the Digilent Basys 3). The project generates a VGA video signal with a resolution of 1920x1080 (1080p).
 
-Jocul constă în controlarea unui triunghi roșu pe ecran, cu scopul de a evita obstacole albastre care se deplasează orizontal. La detectarea unei coliziuni, jocul se resetează la starea inițială.
+The game involves controlling a red triangle (the player) on the screen, with the goal of avoiding horizontally moving blue obstacles. Upon collision detection, the game resets to its initial state.
 
-🛠️ Hardware și Software
-Hardware Necesar
-O placă de dezvoltare 
+🛠️ Requirements
 
-Digilent Basys 3 
+Hardware
 
-Un monitor cu intrare VGA
+A Digilent Basys 3 development board
 
-Un cablu VGA
+A monitor with a VGA input
 
-Software Necesar
-Xilinx Vivado Design Suite: Proiectul utilizează un fișier de constrângeri (.xdc), specific acestui software.
+A VGA cable
 
-📁 Structura Proiectului
-Proiectul este format din următoarele module Verilog și un fișier de constrângeri:
+Software
+
+Xilinx Vivado Design Suite: The project uses a constraints file (.xdc) specific to this software.
+
+📁 Project Structure
+
+The project consists of the following Verilog modules and a constraints file:
 
 1. vga_top.v
-Acesta este modulul de top care integrează toate celelalte componente ale sistemului.
+   
+This is the top-level module that integrates all other components of the system.
 
+Instantiates a clocking wrapper (design_1_wrapper) to generate the required frequency for the VGA signal.
 
+Instantiates the VGA timing controller (vga_1920X1080).
 
-Instanțiază un wrapper pentru ceas (
+Instantiates the game logic module (vga_deplasare).
 
-design_1_wrapper) pentru a genera frecvența necesară semnalului VGA.
-
-Instanțiază controlerul de temporizare VGA (
-
-vga_1920X1080).
-
-Instanțiază modulul cu logica jocului (
-
-vga_deplasare).
-
-Conectează intrările (ceas, reset, butoane) și ieșirile (semnalele VGA RGB, Hsync, Vsync) la pinii externi ai FPGA-ului.
-
-
+Connects the inputs (clock, reset, buttons) and outputs (VGA RGB, Hsync, Vsync signals) to the external pins of the FPGA.
 
 2. vga_1920X1080.v
-Acest modul este responsabil pentru generarea semnalelor de temporizare VGA, conform standardului de 1920x1080 @ 60Hz.
 
-Utilizează contoare orizontale (
+This module is responsible for generating the VGA timing signals according to the 1920x1080 @ 60Hz standard.
 
-h_counter) și verticale (v_counter) pentru a urmări poziția curentă a fasciculului de electroni pe ecran.
+Uses horizontal (h_counter) and vertical (v_counter) counters to track the current position of the electron beam on the screen.
 
+Generates the h_sync and v_sync synchronization signals.
 
-Generează semnalele de sincronizare 
-
-h_sync și v_sync.
-
-Produce un semnal 
-
-display_surface care indică zona vizibilă a ecranului.
+Produces a display_surface signal that indicates the visible area of the screen.
 
 3. vga_deplasare.v
-Acesta este modulul care conține logica jocului.
 
+This module contains the core game logic.
 
-Renderizare Obiecte: Desenează un triunghi roșu (jucătorul) și obstacole albastre pe ecran.
+Object Rendering: Draws a red triangle (the player) and blue obstacles on the screen.
 
+User Control: Takes input from the btnU, btnD, btnL, and btnR buttons to move the triangle.
 
-Control Utilizator: Preia intrările de la butoanele btnU, btnD, btnL, btnR pentru a deplasa triunghiul.
+Obstacle Movement: Implements the logic for the automatic horizontal movement of the obstacles.
 
-
-Mișcare Obstacole: Implementează logica pentru deplasarea orizontală, automată a obstacolelor.
-
-
-Detecție Coliziuni: Verifică dacă există o suprapunere între coordonatele triunghiului și cele ale obstacolelor. La coliziune, resetează poziția jucătorului și a obstacolelor.
-
-
+Collision Detection: Checks for an overlap between the coordinates of the triangle and the obstacles. On collision, it resets the position of the player and the obstacles.
 
 4. Basys3_Master.xdc
-Acesta este fișierul de constrângeri care mapează porturile definite în vga_top.v la pinii fizici ai plăcii Basys 3.
 
+This is the constraints file that maps the ports defined in vga_top.v to the physical pins of the Basys 3 board.
 
-Ceas principal: Pin W5 
+Main Clock: Pin W5
 
-Butoane:
+Buttons:
 
+rst: Pin U18
 
-rst: Pin U18 
+btnU: Pin T18
 
+btnD: Pin U17
 
-btnU: Pin T18 
+btnL: Pin W19
 
+btnR: Pin T17
 
-btnD: Pin U17 
+VGA Outputs:
 
+Hsync: Pin P19
 
-btnL: Pin W19 
+Vsync: Pin R19
 
+vgaRed[3:0]: Pins N19, J19, H19, G19
 
-btnR: Pin T17 
+vgaGreen[3:0]: Pins D17, G17, H17, J17
 
-Ieșiri VGA:
+vgaBlue[3:0]: Pins J18, K18, L18, N18
 
-
-Hsync: Pin P19 
-
-
-Vsync: Pin R19 
-
-
-vgaRed[3:0]: Pini N19, J19, H19, G19 
-
-
-vgaGreen[3:0]: Pini D17, G17, H17, J17 
-
-
-vgaBlue[3:0]: Pini J18, K18, L18, N18 
 ![img1](https://github.com/user-attachments/assets/233a3ab8-4a86-49b9-a720-41fffcbcf739)  
 ![img2](https://github.com/user-attachments/assets/aad6efb3-906a-4e43-96c3-2119b61978b0)
